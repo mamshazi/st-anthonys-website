@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>St. Anthony’s Child &amp; Youth Care Centre</title>
+<meta name="description" content="Supporting vulnerable children and families in Blaauwbosch, KwaZulu-Natal through care, protection, education and community support.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <a class="brand" href="#home">St. Anthony’s <span>Child &amp; Youth Care Centre</span></a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="nav">Menu</button>
+  <nav id="nav" aria-label="Main">
+    <a href="#home">Home</a>
+    <a href="#about">About Us</a>
+    <a href="#journey">Our Journey</a>
+    <a href="#programmes">Our Programmes</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#donate">Donate</a>
+    <a href="#assistance">Request Assistance</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+<section id="home" class="hero">
+  <div class="hero-text">
+    <h1>Keeping Families Together, Building Brighter Futures.</h1>
+    <p>Supporting vulnerable children and families through care, protection, education and community support.</p>
+    <div class="btns">
+      <a class="btn primary" href="#donate">Support Our Children</a>
+      <a class="btn ghost" href="#about">Learn About Us</a>
+    </div>
+  </div>
+  <div class="hero-photo" role="img" aria-label="Photograph of the centre (placeholder)">
+    <img src="images/hero.jpg" alt="Children and staff at St. Anthony’s" onerror="this.remove()">
+    <p class="fact">Home to about 100 children each year since 1986.</p>
+  </div>
+</section>
+
+<section id="about" class="block">
+  <h2>About Us</h2>
+  <div class="cols">
+    <p>St. Anthony’s Child &amp; Youth Care Centre is a registered centre in Blaauwbosch, near Newcastle, KwaZulu-Natal. Since 1986 we have given information, care, training and support to children and families facing circumstances that put a child’s safety, protection and development at risk.</p>
+    <p>Each year, about 100 children live with us. They receive guidance, a safe and clean home, medical care, education, acceptance and love. We also work with their families so children can return home safely, or move to another suitable family setting.</p>
+  </div>
+  <div class="cols two">
+    <div class="panel"><h3>Our vision</h3><p>Children and families receive quality care and develop holistically in a conducive and caring environment.</p></div>
+    <div class="panel"><h3>Our mission</h3><p>To provide care, support and guidance, and to facilitate protection for vulnerable children and their families in KwaZulu-Natal.</p></div>
+  </div>
+  <p class="goal">Our main goal: keeping children safe within families.</p>
+</section>
+
+<section id="journey" class="block alt">
+  <h2>Our Journey</h2>
+  <ol class="timeline">
+    <li><h3>1986–2004</h3><p>Set up orientation procedures, routine in-service training and team meetings. Began recognising and encouraging each child’s unique talents.</p></li>
+    <li><h3>2003–2012</h3><p>Intensified family reunification work, grew funding and assets, professionalised the Child Care Team and adopted strategic planning.</p></li>
+    <li><h3>2013–2019</h3><p>Improved staff care, celebrated achievements of children, families and staff, strengthened family preservation, prioritised individual development plans and improved access to higher education.</p></li>
+  </ol>
+</section>
+
+<section id="programmes" class="block">
+  <h2>Our Programmes</h2>
+  <p class="lead">We care for children from birth to 18 years, supporting their physical, cognitive, educational, spiritual, cultural and life-skills development, and their sense of identity.</p>
+  <ul class="programmes">
+    <li><h3>Residential Care</h3><p>A safe home for children.</p></li>
+    <li><h3>Educational</h3><p>Support for children’s schooling.</p></li>
+    <li><h3>Development</h3><p>Support for holistic child development.</p></li>
+    <li><h3>Therapeutic</h3><p>Support for emotional and psychological wellbeing.</p></li>
+    <li><h3>Recreational</h3><p>Recreational activities for children.</p></li>
+    <li><h3>Reunification &amp; Reintegration</h3><p>Helping children reconnect with their families and communities.</p></li>
+    <li><h3>Aftercare</h3><p>Support for young people beyond residential care.</p></li>
+  </ul>
+</section>
+
+<section id="gallery" class="block alt">
+  <h2>Gallery</h2>
+  <p class="lead">Photographs will be added once the centre confirms permission to publish, to protect the children’s privacy.</p>
+  <div class="gallery">
+    <div class="ph">Photo coming soon</div><div class="ph">Photo coming soon</div><div class="ph">Photo coming soon</div>
+  </div>
+</section>
+
+<section id="donate" class="block">
+  <h2>Donate items</h2>
+  <p class="lead">Tell us what you would like to give. A member of staff will contact you to arrange delivery or collection.</p>
+  <form id="donateForm" class="form" novalidate>
+    <div class="row">
+      <label>Full name or organisation<input name="name" required autocomplete="name"></label>
+      <label>Phone number<input name="phone" type="tel" required autocomplete="tel"></label>
+    </div>
+    <label>Email address<input name="email" type="email" required autocomplete="email"></label>
+    <div class="row">
+      <label>Item<input name="item" required placeholder="e.g. school shoes, blankets"></label>
+      <label>Quantity<input name="quantity" type="number" min="1" required></label>
+    </div>
+    <label>Condition
+      <select name="condition" required>
+        <option value="">Choose one</option><option>New</option><option>Like new</option><option>Good, used</option><option>Fair, used</option>
+      </select>
+    </label>
+    <label>Anything else we should know <span class="opt">(optional)</span><textarea name="notes" rows="3"></textarea></label>
+    <p class="error" role="alert" hidden></p>
+    <button class="btn primary" type="submit">Send donation offer</button>
+  </form>
+  <div id="donateDone" class="done" hidden tabindex="-1"></div>
+</section>
+
+<section id="assistance" class="block alt">
+  <h2>Request Assistance</h2>
+  <p class="lead">Individuals and organisations can apply for help. Please do not include children’s names or sensitive details here. The centre will ask for what it needs once it has reviewed your request. Eligibility criteria will be confirmed by the centre.</p>
+  <form id="assistForm" class="form" novalidate>
+    <label>Applying as
+      <select name="type" required><option value="">Choose one</option><option>Individual</option><option>Organisation</option></select>
+    </label>
+    <div class="row">
+      <label>Full name or organisation<input name="name" required></label>
+      <label>Phone number<input name="phone" type="tel" required></label>
+    </div>
+    <label>Email address <span class="opt">(optional)</span><input name="email" type="email"></label>
+    <label>What help do you need?<input name="need" required placeholder="e.g. food parcels, school uniforms"></label>
+    <label>Briefly explain your circumstances<textarea name="circumstances" rows="4" required></textarea></label>
+    <p class="error" role="alert" hidden></p>
+    <button class="btn primary" type="submit">Send application</button>
+  </form>
+  <div id="assistDone" class="done" hidden tabindex="-1"></div>
+</section>
+
+<section id="contact" class="block">
+  <h2>Contact Us</h2>
+  <div class="cols two">
+    <div>
+      <p><strong>Phone</strong><br><a href="tel:+27343667299">034 366 7299</a></p>
+      <p><strong>Email</strong><br><a href="mailto:admin@stanthonyshome.org">admin@stanthonyshome.org</a><br><a href="mailto:stanthonyshome@worldonline.co.za">stanthonyshome@worldonline.co.za</a></p>
+      <p><strong>Facebook</strong><br>St Anthony’s Child and Youth Care Centre</p>
+    </div>
+    <div>
+      <p><strong>Physical address</strong><br>Blaauwbosch Catholic Mission, near St Lewis High School, Plot 440162, Blaauwbosch, Osizweni, Newcastle, KZN, 2952</p>
+      <p><strong>Postal address</strong><br>P.O. Box 1824, Newcastle, KZN, 2940</p>
+      <p><strong>Charity number</strong><br>004-202</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <p>© St. Anthony’s Child &amp; Youth Care Centre. Registered charity 004-202.</p>
+  <p class="small">Demo version: forms are saved in your browser only until the backend is connected.</p>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>
