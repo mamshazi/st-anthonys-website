@@ -9,24 +9,47 @@ nav.addEventListener('click', e => {
   if (e.target.tagName === 'A') { nav.classList.remove('open'); toggle.setAttribute('aria-expanded', false); }
 });
 
+// Where the backend runs. Change this when the backend is hosted online.
+const API = 'http://localhost:8080';
 const CENTRE_EMAIL = 'admin@stanthonyshome.org';
 
-// Demo storage: the browser only. Replace save() with a fetch() to the backend API in Phase 7.
-function save(key, record) {
+// Backup copy in the visitor's browser, used only if the backend can't be reached.
+function saveLocally(key, record) {
   try {
     const list = JSON.parse(localStorage.getItem(key) || '[]');
     list.push(record);
     localStorage.setItem(key, JSON.stringify(list));
-  } catch (err) { /* storage unavailable: the email option below still works */ }
+  } catch (err) { /* storage unavailable: the email option still works */ }
 }
 
-function handleForm(formId, doneId, storageKey, subject, intro) {
+function showMessage(done, lines, mailLink) {
+  done.replaceChildren();
+  lines.forEach(text => {
+    const p = document.createElement('p');
+    p.textContent = text;
+    done.append(p);
+  });
+  if (mailLink) {
+    const a = document.createElement('a');
+    a.className = 'btn primary';
+    a.href = mailLink;
+    a.textContent = 'Email to the centre';
+    done.append(a);
+  }
+  done.hidden = false;
+  done.focus();
+}
+
+function handleForm(formId, doneId, endpoint, storageKey, subject, intro, toPayload) {
   const form = document.getElementById(formId);
   const done = document.getElementById(doneId);
   const errorBox = form.querySelector('.error');
+  const button = form.querySelector('button[type="submit"]');
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
+
+    // Check the fields
     const fields = [...form.elements].filter(f => f.name);
     let firstBad = null;
     fields.forEach(f => {
@@ -43,26 +66,52 @@ function handleForm(formId, doneId, storageKey, subject, intro) {
     errorBox.hidden = true;
 
     const data = Object.fromEntries(fields.map(f => [f.name, f.value.trim()]));
-    save(storageKey, { ...data, submittedAt: new Date().toISOString(), status: 'New' });
+    button.disabled = true;
 
-    const body = intro + '\n\n' + Object.entries(data).map(([k, v]) => k + ': ' + v).join('\n');
-    const mail = 'mailto:' + CENTRE_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    try {
+      const res = await fetch(API + endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(toPayload(data))
+      });
 
-    done.replaceChildren();
-    const p = document.createElement('p');
-    p.textContent = 'Thank you, ' + data.name + '. Your submission has been recorded.';
-    const p2 = document.createElement('p');
-    p2.textContent = 'This site is still in demo mode, so please also email it to the centre so it reaches them.';
-    const a = document.createElement('a');
-    a.className = 'btn primary';
-    a.href = mail;
-    a.textContent = 'Email to the centre';
-    done.append(p, p2, a);
-    done.hidden = false;
-    form.reset();
-    done.focus();
+      if (res.ok) {
+        const result = await res.json();
+        showMessage(done, [
+          'Thank you, ' + data.name + '. Your submission has been received.',
+          'Your reference number is ' + result.id + '. A member of staff will contact you.'
+        ]);
+        form.reset();
+        return;
+      }
+      if (res.status === 400) {
+        errorBox.textContent = 'Some details were not accepted. Please check the form and try again.';
+        errorBox.hidden = false;
+        return;
+      }
+      throw new Error('Server error ' + res.status);
+    } catch (err) {
+      // Backend not reachable: keep a copy and offer the email option instead.
+      saveLocally(storageKey, { ...data, submittedAt: new Date().toISOString() });
+      const body = intro + '\n\n' + Object.entries(data).map(([k, v]) => k + ': ' + v).join('\n');
+      const mail = 'mailto:' + CENTRE_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      showMessage(done, [
+        'Thank you, ' + data.name + '. We could not reach our system just now.',
+        'Please send your details to the centre by email so they are not lost.'
+      ], mail);
+      form.reset();
+    } finally {
+      button.disabled = false;
+    }
   });
 }
 
-handleForm('donateForm', 'donateDone', 'donations', 'Donation offer from website', 'New donation offer:');
-handleForm('assistForm', 'assistDone', 'applications', 'Assistance request from website', 'New assistance request:');
+handleForm('donateForm', 'donateDone', '/api/donations', 'donations',
+  'Donation offer from website', 'New donation offer:',
+  d => ({ name: d.name, phone: d.phone, email: d.email, item: d.item,
+          quantity: Number(d.quantity), condition: d.condition, notes: d.notes }));
+
+handleForm('assistForm', 'assistDone', '/api/applications', 'applications',
+  'Assistance request from website', 'New assistance request:',
+  d => ({ type: d.type, name: d.name, phone: d.phone, email: d.email,
+          need: d.need, circumstances: d.circumstances }));
