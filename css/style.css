@@ -84,3 +84,7 @@ input[aria-invalid=true],select[aria-invalid=true],textarea[aria-invalid=true]{b
 .site-footer{background:var(--green-dk);color:#d7e6e0;text-align:center;padding:2rem 1rem}
 .site-footer p{margin:.2rem 0}.small{font-size:.85rem;opacity:.8}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.gallery figure{margin:0}
+.gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px}
+.gallery img.tall{object-position:center 60%}
+.gallery figcaption{font-size:.9rem;color:var(--muted);margin-top:.4rem}
